@@ -1,0 +1,39 @@
+.game-logo {
+  width: 40%;
+}
+
+#start-game-button {
+  border: 0;
+  box-shadow: 0;
+  background: #2300ff;
+  color: #fff;
+  padding: 20px 40px;
+  font-size: 30px;
+  border-radius: 5px;
+}
+#player1 {
+  border: 0;
+  background: #2300ff;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 20px;
+  border-radius: 5px;
+  margin: 0 30px;
+}
+#player2 {
+  border: 0;
+  background: #2300ff;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 20px;
+  border-radius: 5px;
+  margin: 0 30px;
+}
+#move-button {
+  border: 0;
+  background: #2300ff;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 20px;
+  border-radius: 5px;
+}
