@@ -257,21 +257,29 @@ document.getElementById("steps2").onclick = player2Steps;
 
 board = new BoardCanvas();
 BoardCanvas.prototype.gameOver = function(name) {
-  this.ctx.clearRect(0, 0, canvas.width, canvas.height);
-  document
-    .getElementById("canvas")
-    .setAttribute("style", "background-image:none");
-  this.ctx.fillStyle = "black";
-  this.ctx.font = "100px Verdana";
-  this.ctx.fontWeight = "5px";
-  this.ctx.fillText(name, 100, 100);
-  var img = new Image();
-  that = this;
-  img.onload = function() {
-    that.ctx.drawImage(img, 50, 130);
-  };
-  img.src = "./images/awesome.png";
+  $("body").html(
+    "<div id='gameOver'><h1>" +
+      name +
+      "</h1><div><img src='./images/awesome.png'></div></div>"
+  );
+  //or using a canvas
+
+  // this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // document
+  //   .getElementById("canvas")
+  //   .setAttribute("style", "background-image:none");
+  // this.ctx.fillStyle = "black";
+  // this.ctx.font = "100px Verdana";
+  // this.ctx.fontWeight = "5px";
+  // this.ctx.fillText(name, 100, 100);
+  // var img = new Image();
+  // that = this;
+  // img.onload = function() {
+  //   that.ctx.drawImage(img, 50, 130);
+  // };
+  // img.src = "./images/awesome.png";
 };
+
 //use keyboard to move the horses
 var KEY_P = 80;
 var KEY_M = 77;
@@ -283,25 +291,21 @@ document.onkeydown = function(e) {
     e.keyCode === KEY_A &&
     !document.getElementById("player1").getAttribute("disabled")
   ) {
-    $(".text").html("<p></p>");
     player1Plays();
   } else if (
     e.keyCode === KEY_Q &&
     !document.getElementById("steps1").getAttribute("disabled")
   ) {
-    $(".text").html("<p></p>");
     player1Steps();
   } else if (
     e.keyCode === KEY_P &&
     !document.getElementById("player2").getAttribute("disabled")
   ) {
-    $(".text").html("<p></p>");
     player2Plays();
   } else if (
     e.keyCode === KEY_M &&
     !document.getElementById("steps2").getAttribute("disabled")
   ) {
-    $(".text").html("<p></p>");
     player2Steps();
   }
 };

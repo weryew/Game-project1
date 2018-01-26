@@ -16,9 +16,13 @@
   padding: 10px 20px;
   font-size: 20px;
   border-radius: 5px;
-  margin: 10px 30px;
   width: 100px;
   height: 50px;
+  margin: 0px 10px;
+}
+.keyButton {
+  width: 30px;
+  height: 30px;
 }
 
 #move-button {
@@ -41,4 +45,15 @@
 .text {
   font-size: 20px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+#gameOver {
+  margin: 150px 50px;
+  padding: 50px;
+  text-align: center;
+}
+h1 {
+  color: #92918d;
+  font-size: 100px;
+  font-family: "Anton", sans-serif;
+  font-weight: lighter;
 }

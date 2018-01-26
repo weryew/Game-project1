@@ -8,18 +8,11 @@ function Horse() {
   this.throw = 0;
   this.image = horse1;
 }
-
 Horse.prototype.chooseColorAndName = function() {
   this.name = prompt("What's your name?");
   var colorIndex = prompt(
     "Choose a color:\n 1: blue\n 2: yellow\n 3: red \n 4: green"
   );
-  while (colorIndex < 1 || colorIndex > 4) {
-    colorIndex = prompt(
-      "Your color is not defined!\n Please choose another color:\n 1: blue\n 2: yellow\n 3: red \n 4: green"
-    );
-  }
-
   switch (colorIndex) {
     case "1":
       this.color = "#4b98ce";
