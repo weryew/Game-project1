@@ -1,19 +1,33 @@
 var horsePlayer1, horsePlayer2;
-var colors = ["blue", "green", "red", "yellow"];
 
 document.getElementById("start-game-button").onclick = function() {
   horsePlayer1 = new Horse();
   horsePlayer2 = new Horse();
-  horsePlayer1.chooseColor();
-  horsePlayer2.chooseColor();
+  horsePlayer1.image = horse1;
+  horsePlayer2.image = horse2;
+  horsePlayer1.chooseColorAndName();
+  horsePlayer2.chooseColorAndName();
   horsePlayer1.defineMyHorse();
   horsePlayer2.defineMyHorse();
-  horsePlayer1.canStartPiece();
-  horsePlayer2.canStartPiece();
+  document.getElementById("player1").setAttribute("value", horsePlayer1.name);
+  document.getElementById("player2").setAttribute("value", horsePlayer2.name);
+  document
+    .getElementById("player1")
+    .setAttribute("style", "background:" + horsePlayer1.color);
+  document
+    .getElementById("player2")
+    .setAttribute("style", "background:" + horsePlayer2.color);
+  document
+    .getElementById("steps1")
+    .setAttribute("style", "background:" + horsePlayer1.color);
+  document
+    .getElementById("steps2")
+    .setAttribute("style", "background:" + horsePlayer2.color);
 };
 
 function BoardCanvas() {
   this.ctx = document.getElementById("canvas").getContext("2d");
+  this.ctx.clearRect(0, 0, canvas.width, canvas.height);
   this.drawDots();
 }
 
@@ -80,7 +94,7 @@ BoardCanvas.prototype.drawDots = function() {
     this.ctx.lineWidth = 1;
     this.ctx.moveTo(40 + i * 40, 342.5);
     this.ctx.arc(25 + i * 40, 342.5, 15, 0, Math.PI * 2, true);
-    this.ctx.fillStyle = "red";
+    this.ctx.fillStyle = "#ff4108";
     this.ctx.fill();
     this.ctx.stroke();
   }
@@ -89,7 +103,7 @@ BoardCanvas.prototype.drawDots = function() {
     this.ctx.lineWidth = 1;
     this.ctx.moveTo(360 + i * 40, 342.5);
     this.ctx.arc(345 + i * 40, 342.5, 15, 0, Math.PI * 2, true);
-    this.ctx.fillStyle = "blue";
+    this.ctx.fillStyle = "#4b98ce";
     this.ctx.fill();
     this.ctx.stroke();
   }
@@ -98,7 +112,7 @@ BoardCanvas.prototype.drawDots = function() {
     this.ctx.lineWidth = 1;
     this.ctx.moveTo(317.5, 65 + i * 40);
     this.ctx.arc(302.5, 65 + i * 40, 15, 0, Math.PI * 2, true);
-    this.ctx.fillStyle = "yellow";
+    this.ctx.fillStyle = "#fdff0d";
     this.ctx.fill();
     this.ctx.stroke();
   }
@@ -107,7 +121,7 @@ BoardCanvas.prototype.drawDots = function() {
     this.ctx.lineWidth = 1;
     this.ctx.moveTo(317.5, 385 + i * 40);
     this.ctx.arc(302.5, 385 + i * 40, 15, 0, Math.PI * 2, true);
-    this.ctx.fillStyle = "green";
+    this.ctx.fillStyle = "#99d50e";
     this.ctx.fill();
     this.ctx.stroke();
   }
@@ -115,22 +129,22 @@ BoardCanvas.prototype.drawDots = function() {
 
 BoardCanvas.prototype.showCurrentPosition = function(horse) {
   this.ctx.beginPath();
-  this.ctx.lineWidth = 1;
-  this.ctx.moveTo(horse.currentPosition[0] + 15, horse.currentPosition[1]);
-  this.ctx.arc(
-    horse.currentPosition[0],
-    horse.currentPosition[1],
-    15,
-    0,
-    Math.PI * 2,
-    true
+  this.ctx.lineWidth = 4;
+  this.ctx.moveTo(horse.currentPosition[0] + 10, horse.currentPosition[1]);
+  this.ctx.drawImage(
+    horse.image,
+    horse.currentPosition[0] - 20,
+    horse.currentPosition[1] - 20,
+    40,
+    40
   );
-  this.ctx.fillStyle = horse.color;
-  this.ctx.fill();
-  this.ctx.stroke();
 };
-
-//creat the Dice
+//horses images
+var horse1 = new Image();
+horse1.src = "./images/horse1.png";
+var horse2 = new Image();
+horse2.src = "./images/horse2.jpg";
+//dice faces
 var face1 = new Image();
 face1.src = "./images/de1.png";
 var face2 = new Image();
@@ -144,14 +158,158 @@ face5.src = "./images/de5.png";
 var face6 = new Image();
 face6.src = "./images/de6.png";
 
-document.getElementById("player1").onclick = function() {
+//use keyboard to move the horses
+function player1Plays() {
+  document.getElementById("player1").setAttribute("disabled", true);
+  document.getElementById("steps1").setAttribute("disabled", true);
+  document.getElementById("steps2").removeAttribute("disabled");
+  document.getElementById("player2").removeAttribute("disabled");
   var randomdice = Math.floor(Math.random() * 6 + 1);
   document.images["mydice"].src = eval("face" + randomdice + ".src");
   horsePlayer1.throw = randomdice;
-};
-document.getElementById("player2").onclick = function() {
+
+  if (horsePlayer1.start === false) {
+    horsePlayer1.canStartPiece(horsePlayer2.name);
+    if (
+      horsePlayer1.currentPosition.toString() ===
+      horsePlayer1.properties.startPosition.toString()
+    ) {
+      board.showCurrentPosition(horsePlayer1);
+      horsePlayer1.start = true;
+    }
+  } else {
+    horsePlayer1.moveForward();
+    horsePlayer2.defineMyHorse();
+    if (horsePlayer1.canKickThePlayer(horsePlayer2)) {
+      $(".text").html(
+        "<p>" +
+          horsePlayer2.name +
+          "you should go back to the start position!</p>"
+      );
+      horsePlayer2.currentPosition = horsePlayer2.properties.startPosition;
+    }
+    board = new BoardCanvas();
+    board.showCurrentPosition(horsePlayer2);
+    board.showCurrentPosition(horsePlayer1);
+  }
+}
+function player1Steps() {
+  document.getElementById("player1").setAttribute("disabled", true);
+  document.getElementById("player2").removeAttribute("disabled");
+  document.getElementById("steps1").setAttribute("disabled", true);
+  document.getElementById("steps2").removeAttribute("disabled");
+  var randomdice = Math.floor(Math.random() * 6 + 1);
+  document.images["mydice"].src = eval("face" + randomdice + ".src");
+  horsePlayer1.throw = randomdice;
+  board = new BoardCanvas();
+  board.showCurrentPosition(horsePlayer2);
+  horsePlayer1.doFinalSteps();
+  board.showCurrentPosition(horsePlayer1);
+  if (horsePlayer1.isTheWinner()) {
+    board.gameOver(horsePlayer1.name);
+  }
+}
+function player2Plays() {
+  document.getElementById("player2").setAttribute("disabled", true);
+  document.getElementById("steps1").removeAttribute("disabled");
+  document.getElementById("steps2").setAttribute("disabled", true);
+  document.getElementById("player1").removeAttribute("disabled");
   var randomdice = Math.floor(Math.random() * 6 + 1);
   document.images["mydice"].src = eval("face" + randomdice + ".src");
   horsePlayer2.throw = randomdice;
-};
+  if (horsePlayer2.start === false) {
+    horsePlayer2.canStartPiece(horsePlayer1.name);
+    if (
+      horsePlayer2.currentPosition.toString() ===
+      horsePlayer2.properties.startPosition.toString()
+    ) {
+      horsePlayer2.start = true;
+      board.showCurrentPosition(horsePlayer2);
+    }
+  } else {
+    horsePlayer2.moveForward();
+    horsePlayer1.defineMyHorse();
+    if (horsePlayer2.canKickThePlayer(horsePlayer1)) {
+      $(".text").html(
+        "<p>" +
+          horsePlayer1.name +
+          "you should go back to the start position!</p>"
+      );
+      horsePlayer1.currentPosition = horsePlayer1.properties.startPosition;
+    }
+    board = new BoardCanvas();
+    board.showCurrentPosition(horsePlayer1);
+    board.showCurrentPosition(horsePlayer2);
+  }
+}
+function player2Steps() {
+  document.getElementById("player2").setAttribute("disabled", true);
+  document.getElementById("player1").removeAttribute("disabled");
+  document.getElementById("steps2").setAttribute("disabled", true);
+  document.getElementById("steps1").removeAttribute("disabled");
+  var randomdice = Math.floor(Math.random() * 6 + 1);
+  document.images["mydice"].src = eval("face" + randomdice + ".src");
+  horsePlayer2.throw = randomdice;
+  board = new BoardCanvas();
+  board.showCurrentPosition(horsePlayer1);
+  horsePlayer2.doFinalSteps();
+  board.showCurrentPosition(horsePlayer2);
+  if (horsePlayer2.isTheWinner()) {
+    board.gameOver(horsePlayer2.name);
+  }
+}
+document.getElementById("player1").onclick = player1Plays;
+document.getElementById("steps1").onclick = player1Steps;
+document.getElementById("player2").onclick = player2Plays;
+document.getElementById("steps2").onclick = player2Steps;
+
 board = new BoardCanvas();
+BoardCanvas.prototype.gameOver = function(name) {
+  this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+  document
+    .getElementById("canvas")
+    .setAttribute("style", "background-image:none");
+  this.ctx.fillStyle = "black";
+  this.ctx.font = "100px Verdana";
+  this.ctx.fontWeight = "5px";
+  this.ctx.fillText(name, 100, 100);
+  var img = new Image();
+  that = this;
+  img.onload = function() {
+    that.ctx.drawImage(img, 50, 130);
+  };
+  img.src = "./images/awesome.png";
+};
+
+var KEY_P = 80;
+var KEY_M = 77;
+var KEY_A = 65;
+var KEY_Q = 81;
+
+document.onkeydown = function(e) {
+  if (
+    e.keyCode === KEY_P &&
+    !document.getElementById("player1").getAttribute("disabled")
+  ) {
+    $(".text").html("<p></p>");
+    player1Plays();
+  } else if (
+    e.keyCode === KEY_M &&
+    !document.getElementById("steps1").getAttribute("disabled")
+  ) {
+    $(".text").html("<p></p>");
+    player1Steps();
+  } else if (
+    e.keyCode === KEY_A &&
+    !document.getElementById("player2").getAttribute("disabled")
+  ) {
+    $(".text").html("<p></p>");
+    player2Plays();
+  } else if (
+    e.keyCode === KEY_Q &&
+    !document.getElementById("steps2").getAttribute("disabled")
+  ) {
+    $(".text").html("<p></p>");
+    player2Steps();
+  }
+};

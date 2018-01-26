@@ -11,22 +11,29 @@
 
 <body>
   <div style="text-align:center; margin: 50px 0px;">
-    <img src="https://lh3.googleusercontent.com/wCfucgFoA_vC0pW6czxyImm6xJN98bQHIxgcI4FZz-LTUiNHnYUMD6cg-vRpDzdWzoI=h900" alt="game-logo"
-      class="game-logo">
+    <img src="./images/gameLogo.png" alt="game-logo" class="game-logo">
   </div>
   <div style="text-align:center; margin: 50px 0px;">
     <button id="start-game-button">START GAME</button>
   </div>
   <div style="text-align:center">
     <canvas id="canvas" height="660px" width="610px"></canvas>
+    <p class="text"></p>
   </div>
   <div style="text-align:center">
-    <img src="./images/de1.png" name="mydice" width="150px">
+    <img src="./images/de1.png" name="mydice" width="100px">
     <form>
-      <input type="button" value="Player1" id="player1">
-      <input type="button" value="Player2" id="player2">
+      <input type="button" value="Player1" id="player1" class="button">
+      <input type="button" value="Player2" id="player2" class="button">
+      <div>
+        <img src="./images/horse1.png" alt="horse1" width="100px">
+        <input type="button" value="Steps1" id="steps1" class="button">
+        <input type="button" value="Steps2" id="steps2" class="button">
+        <img src="./images/horse2.jpg" alt="horse2" width="100px">
+      </div>
     </form>
   </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script type="text/javascript" src="game.js"></script>
   <script type="text/javascript" src="canvas.js"></script>
 </body>

@@ -1,5 +1,5 @@
 .game-logo {
-  width: 40%;
+  width: 55%;
 }
 
 #start-game-button {
@@ -7,33 +7,39 @@
   box-shadow: 0;
   background: #2300ff;
   color: #fff;
-  padding: 20px 40px;
-  font-size: 30px;
+  padding: 20px 30px;
+  font-size: 20px;
   border-radius: 5px;
 }
-#player1 {
+.button {
   border: 0;
-  background: #2300ff;
   color: #fff;
   padding: 10px 20px;
   font-size: 20px;
   border-radius: 5px;
-  margin: 0 30px;
+  margin: 10px 30px;
+  width: 100px;
+  height: 50px;
 }
-#player2 {
-  border: 0;
-  background: #2300ff;
-  color: #fff;
-  padding: 10px 20px;
-  font-size: 20px;
-  border-radius: 5px;
-  margin: 0 30px;
-}
+
 #move-button {
   border: 0;
-  background: #2300ff;
+  background: #09080e;
   color: #fff;
   padding: 10px 20px;
   font-size: 20px;
   border-radius: 5px;
+}
+
+#canvas {
+  background-image: url("./images/fourHorses.png");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border: rgb(74, 75, 75) solid 1px;
+  border-radius: 50px;
+}
+
+.text {
+  font-size: 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }

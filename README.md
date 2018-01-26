@@ -1,2 +1,13 @@
-# Game-project1
-Ludo game 
+# JS | Ludo
+
+## Introduction
+
+## First iteration:
+
+## Second Iteration:
+
+## Third Iteration:
+
+## Fourth Iteration:
+
+## Fifth Iteration:
