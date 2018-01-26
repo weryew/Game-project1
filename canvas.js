@@ -1,5 +1,6 @@
 var horsePlayer1, horsePlayer2;
 var audio = new Audio("audio.mp3");
+var yeahSound = new Audio("happykids.mp3");
 document.getElementById("start-game-button").onclick = function() {
   audio.play();
   horsePlayer1 = new Horse();
@@ -257,27 +258,13 @@ document.getElementById("steps2").onclick = player2Steps;
 
 board = new BoardCanvas();
 BoardCanvas.prototype.gameOver = function(name) {
+  audio.pause();
+  yeahSound.play();
   $("body").html(
     "<div id='gameOver'><h1>" +
       name +
       "</h1><div><img src='./images/awesome.png'></div></div>"
   );
-  //or using a canvas
-
-  // this.ctx.clearRect(0, 0, canvas.width, canvas.height);
-  // document
-  //   .getElementById("canvas")
-  //   .setAttribute("style", "background-image:none");
-  // this.ctx.fillStyle = "black";
-  // this.ctx.font = "100px Verdana";
-  // this.ctx.fontWeight = "5px";
-  // this.ctx.fillText(name, 100, 100);
-  // var img = new Image();
-  // that = this;
-  // img.onload = function() {
-  //   that.ctx.drawImage(img, 50, 130);
-  // };
-  // img.src = "./images/awesome.png";
 };
 
 //use keyboard to move the horses
