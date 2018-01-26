@@ -100,7 +100,9 @@ Horse.prototype.defineMyHorse = function() {
 Horse.prototype.canStartPiece = function(name) {
   var test = true;
   if (this.throw === 6) {
-    $(".text").html("<p>" + this.name + ", you can move now!</p>");
+    $(".text").html(
+      "<p>" + this.name + ", you've thrown 6.. You can move your piece now!</p>"
+    );
     this.currentPosition = this.properties.startPosition;
   } else {
     test = false;
@@ -113,6 +115,17 @@ Horse.prototype.canStartPiece = function(name) {
     );
   }
   return test;
+};
+
+Horse.prototype.canDoFinalSteps = function() {
+  this.defineMyHorse();
+  if (
+    this.currentPosition.toString() === this.properties.finalPosition.toString()
+  ) {
+    $(".text").html(
+      "<p>" + this.name + " you can proceed up the home column! </p>"
+    );
+  }
 };
 
 Horse.prototype.doNextStep = function() {
@@ -197,6 +210,7 @@ Horse.prototype.moveForward = function() {
     this.doNextStep();
     i++;
   }
+  $(".text").html("<p> Keep moving " + this.name + "!</p>");
 };
 
 Horse.prototype.doFinalSteps = function() {
@@ -205,30 +219,65 @@ Horse.prototype.doFinalSteps = function() {
       this.properties.finalPosition.toString() &&
     this.throw === 1
   ) {
+    $(".text").html(
+      "<p>" +
+        this.name +
+        " you should throw " +
+        (this.throw + 1) +
+        " next time! </p>"
+    );
     this.currentPosition = this.properties.finalSteps[0];
   } else if (
     this.currentPosition.toString() ===
       this.properties.finalSteps[0].toString() &&
     this.throw === 2
   ) {
+    $(".text").html(
+      "<p>" +
+        this.name +
+        " you should throw " +
+        (this.throw + 1) +
+        " next time! </p>"
+    );
     this.currentPosition = this.properties.finalSteps[1];
   } else if (
     this.currentPosition.toString() ===
       this.properties.finalSteps[1].toString() &&
     this.throw === 3
   ) {
+    $(".text").html(
+      "<p>" +
+        this.name +
+        " you should throw " +
+        (this.throw + 1) +
+        " next time! </p>"
+    );
     this.currentPosition = this.properties.finalSteps[2];
   } else if (
     this.currentPosition.toString() ===
       this.properties.finalSteps[2].toString() &&
     this.throw === 4
   ) {
+    $(".text").html(
+      "<p>" +
+        this.name +
+        " you should throw " +
+        (this.throw + 1) +
+        " next time! </p>"
+    );
     this.currentPosition = this.properties.finalSteps[3];
   } else if (
     this.currentPosition.toString() ===
       this.properties.finalSteps[3].toString() &&
     this.throw === 5
   ) {
+    $(".text").html(
+      "<p>" +
+        this.name +
+        " you should throw " +
+        (this.throw + 1) +
+        " next time! </p>"
+    );
     this.currentPosition = this.properties.finalSteps[4];
   } else if (
     this.currentPosition.toString() ===
@@ -236,6 +285,11 @@ Horse.prototype.doFinalSteps = function() {
     this.throw === 6
   ) {
     this.currentPosition = this.properties.finalSteps[5];
+    $(".text").html(
+      "<p>" +
+        this.name +
+        " you are one step from winning.. You should throw another 6!! </p>"
+    );
   } else if (
     this.currentPosition.toString() ===
       this.properties.finalSteps[5].toString() &&
@@ -246,7 +300,14 @@ Horse.prototype.doFinalSteps = function() {
 };
 
 Horse.prototype.canKickThePlayer = function(horse) {
-  return this.currentPosition.toString() === horse.currentPosition.toString();
+  var test =
+    this.currentPosition.toString() === horse.currentPosition.toString();
+  if (test) {
+    $(".text").html(
+      "<p>" + horse.name + " you should go back to the start position!</p>"
+    );
+  }
+  return test;
 };
 
 Horse.prototype.isTheWinner = function() {

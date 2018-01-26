@@ -1,6 +1,7 @@
 var horsePlayer1, horsePlayer2;
-
+var audio = new Audio("audio.mp3");
 document.getElementById("start-game-button").onclick = function() {
+  audio.play();
   horsePlayer1 = new Horse();
   horsePlayer2 = new Horse();
   horsePlayer1.image = horse1;
@@ -158,7 +159,6 @@ face5.src = "./images/de5.png";
 var face6 = new Image();
 face6.src = "./images/de6.png";
 
-//use keyboard to move the horses
 function player1Plays() {
   document.getElementById("player1").setAttribute("disabled", true);
   document.getElementById("steps1").setAttribute("disabled", true);
@@ -181,16 +181,12 @@ function player1Plays() {
     horsePlayer1.moveForward();
     horsePlayer2.defineMyHorse();
     if (horsePlayer1.canKickThePlayer(horsePlayer2)) {
-      $(".text").html(
-        "<p>" +
-          horsePlayer2.name +
-          "you should go back to the start position!</p>"
-      );
       horsePlayer2.currentPosition = horsePlayer2.properties.startPosition;
     }
     board = new BoardCanvas();
     board.showCurrentPosition(horsePlayer2);
     board.showCurrentPosition(horsePlayer1);
+    horsePlayer1.canDoFinalSteps();
   }
 }
 function player1Steps() {
@@ -230,16 +226,12 @@ function player2Plays() {
     horsePlayer2.moveForward();
     horsePlayer1.defineMyHorse();
     if (horsePlayer2.canKickThePlayer(horsePlayer1)) {
-      $(".text").html(
-        "<p>" +
-          horsePlayer1.name +
-          "you should go back to the start position!</p>"
-      );
       horsePlayer1.currentPosition = horsePlayer1.properties.startPosition;
     }
     board = new BoardCanvas();
     board.showCurrentPosition(horsePlayer1);
     board.showCurrentPosition(horsePlayer2);
+    horsePlayer2.canDoFinalSteps();
   }
 }
 function player2Steps() {
@@ -280,7 +272,7 @@ BoardCanvas.prototype.gameOver = function(name) {
   };
   img.src = "./images/awesome.png";
 };
-
+//use keyboard to move the horses
 var KEY_P = 80;
 var KEY_M = 77;
 var KEY_A = 65;
@@ -288,25 +280,25 @@ var KEY_Q = 81;
 
 document.onkeydown = function(e) {
   if (
-    e.keyCode === KEY_P &&
+    e.keyCode === KEY_A &&
     !document.getElementById("player1").getAttribute("disabled")
   ) {
     $(".text").html("<p></p>");
     player1Plays();
   } else if (
-    e.keyCode === KEY_M &&
+    e.keyCode === KEY_Q &&
     !document.getElementById("steps1").getAttribute("disabled")
   ) {
     $(".text").html("<p></p>");
     player1Steps();
   } else if (
-    e.keyCode === KEY_A &&
+    e.keyCode === KEY_P &&
     !document.getElementById("player2").getAttribute("disabled")
   ) {
     $(".text").html("<p></p>");
     player2Plays();
   } else if (
-    e.keyCode === KEY_Q &&
+    e.keyCode === KEY_M &&
     !document.getElementById("steps2").getAttribute("disabled")
   ) {
     $(".text").html("<p></p>");
