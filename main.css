@@ -35,6 +35,7 @@
 }
 
 #canvas {
+  background-color: white;
   background-image: url("./images/fourHorses.png");
   background-repeat: no-repeat;
   background-size: 100%;
