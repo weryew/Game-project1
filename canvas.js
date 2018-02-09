@@ -1,8 +1,6 @@
 var horsePlayer1, horsePlayer2;
-var audio = new Audio("audio.mp3");
 var yeahSound = new Audio("happykids.mp3");
 document.getElementById("start-game-button").onclick = function() {
-  audio.play();
   horsePlayer1 = new Horse();
   horsePlayer2 = new Horse();
   horsePlayer1.image = horse1;
@@ -258,7 +256,6 @@ document.getElementById("steps2").onclick = player2Steps;
 
 board = new BoardCanvas();
 BoardCanvas.prototype.gameOver = function(name) {
-  audio.pause();
   yeahSound.play();
   $("body").html(
     "<div id='gameOver'><h1>" +
